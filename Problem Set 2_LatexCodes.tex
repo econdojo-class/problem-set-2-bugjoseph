@@ -1,0 +1,127 @@
+%------------%
+%  Preamble  %
+%------------%
+
+\documentclass[final,11pt]{article}
+\usepackage[paperwidth=9.0in, top=1.2in, bottom=1.2in, left=1.2in, right=1.2in]{geometry}
+\usepackage{amsmath}
+\usepackage{color}
+\usepackage{multirow}
+\usepackage{setspace}
+\usepackage{fancyhdr}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{mathpazo}
+\usepackage{graphicx}
+\usepackage{threeparttable}
+\usepackage{eurosym}
+\usepackage[colorlinks, linkcolor=blue, anchorcolor=blue, citecolor=blue]{hyperref}
+
+\renewcommand{\headrulewidth}{0pt}
+\setlength{\arraycolsep}{10pt}
+\setlength\headheight{0.5cm}
+\setlength\headsep{0.8cm}
+\setlength\footskip{1.0cm}
+\setlength{\parindent}{0em}
+\pagestyle{fancy}
+\chead{\textcolor[rgb]{0.5,0.5,0.5}{\sc Spring 2025: ECON 6100}}
+
+%------------%
+%  Document  %
+%------------%
+
+\begin{document}
+\thispagestyle{empty}
+\begin{spacing}{1.25}
+
+\textbf{Your Name:  JOSEPH AGOR  \hfill Problem Set 2, Due: Mar. 18, 2025}\\
+
+(1) Use the probability integral transformation method to simulate from the distribution
+\begin{gather}
+    f(x) = 
+    \begin{cases}
+        \frac{2}{a^2}x,  & \text{if }0\leq x\leq a \\
+        0, & \text{otherwise}
+    \end{cases}
+\end{gather}
+where $a>0$. Set a value for $a$, simulate various sample sizes, and compare results to the true distribution.
+
+
+\section*{Question 1: Probability Integral Transformation}
+Given the probability density function:
+\begin{equation}
+ f(x) = \begin{cases}
+        \frac{2}{a^2} x, & 0 \leq x \leq a \\
+        0, & \text{otherwise}
+    \end{cases}
+\end{equation}
+We use the inverse transform method:
+\begin{equation}
+    F(x) = \int_0^x \frac{2}{a^2} t dt = \frac{x^2}{a^2}.
+\end{equation}
+Solving for $x$ in terms of $U \sim U(0,1)$:
+\begin{equation}
+    x = a \sqrt{U}.
+\end{equation}
+We simulate samples for different sizes and compare them with the theoretical distribution. 
+
+\begin{center}
+    \includegraphics[width=0.8\textwidth]{triangular_distribution.png}
+\end{center}
+
+\newpage 
+
+(2) Generate samples from the distribution
+\begin{gather}
+    f(x)=\frac{2}{3}e^{-2x}+2e^{-3x}
+\end{gather}
+using the finite mixture approach.
+
+
+\section*{Question 2: Mixture of Exponentials}
+The given density function is:
+\begin{equation}
+    f(x) = \frac{2}{3} e^{-2x} + 2e^{-3x}.
+\end{equation}
+We use the finite mixture approach where each component is selected with equal probability. The sampling method follows:
+\begin{itemize}
+    \item Generate $U \sim U(0,1)$.
+    \item If $U < 0.5$, sample $X \sim \text{Exp}(2)$, else sample $X \sim \text{Exp}(3)$.
+\end{itemize}
+\begin{center}
+    \includegraphics[width=0.8\textwidth]{mixture_exponentials.png}
+\end{center}
+
+\newpage
+
+(3) Draw 500 observations from Beta$(3,3)$ using the accept-reject algorithm. Compute the mean and variance of the sample and compare them to the true values.
+
+
+\section*{Question 3: Beta(3,3) using Accept-Reject}
+Using $g(x) = U(0,1)$ as the proposal distribution, we have:
+\begin{equation}
+    f(x) = \frac{\Gamma(6)}{\Gamma(3)\Gamma(3)} x^2 (1-x)^2.
+\end{equation}
+The constant $c$ is chosen such that:
+\begin{equation}
+    c \geq \sup_x \frac{f(x)}{g(x)} = 1.5.
+\end{equation}
+The accept-reject algorithm follows:
+\begin{itemize}
+    \item Generate $Y \sim U(0,1)$.
+    \item Generate $U \sim U(0,1)$.
+    \item Accept $Y$ if $U \leq \frac{f(Y)}{c g(Y)}$.
+\end{itemize}
+The empirical mean and variance are compared with theoretical values.
+
+\begin{center}
+    \includegraphics[width=0.8\textwidth]{beta_distribution.png}
+\end{center}
+
+Empirical Mean: \texttt{\textbf{0.508045063498666}}, Theoretical Mean: \texttt{0.5} \\
+Empirical Variance: \texttt{\textbf{0.03895205175094688}}, Theoretical Variance: \texttt{0.0278}
+
+
+
+
